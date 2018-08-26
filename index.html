@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Chat</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div id="app">
+    <div class="chat">
+    <div class="name">Your name : <input type="text" class="name__input" value="{{name}}" v-model="name"></div>
+      <h3 class="chat__title">CHAT VUE <span class="chat__delete" @click="clearChat">clear</span></h3>
+      <ul class="chat__list" id="list">
+        <li class="chat__el" v-for="item in chat">
+          <div class="chat__name">{{item.name}} :</div>
+          <div class="chat__time">{{item.time}}</div>
+          <div class="chat__message">{{item.message}}</div>
+        </li>
+      </ul>
+      <input type="text" class="chat__mess" placeholder="enter your message" v-model="val">
+      <button class="chat__button" @click="add">send</button>
+    </div>
+  </div>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.16/vue.js"></script>
+
+<script>
+var app = new Vue({
+  el: '#app',
+  data: {
+    val: '',
+    name: 'Guest',
+    chat: []
+  },
+  created: function () {
+    if(localStorage.chat){
+      this.chat = JSON.parse(localStorage.chat);
+    }
+    this.getHeightChat();
+  },
+  watch: {
+    chat: function(val){
+      this.message = val;
+    }
+  },
+  methods: {
+    add: function(){
+      if(this.val.length < 1){
+        return false;
+      }else{
+        this.chat.push({name: this.name, message: this.val, time: new Date().toLocaleString().split(',').splice(1,1).join()});
+        this.val = '';
+        this.addLocal();  
+        this.getHeightChat();      
+      }
+    },
+    clearChat: function(){
+      this.chat = [];
+      this.addLocal();
+      this.getHeightChat();
+    },
+    addLocal: function(){
+      localStorage.setItem('chat', JSON.stringify(this.chat));
+    },
+    getHeightChat: function(){
+
+      setTimeout(function(){
+        document.getElementById('list').style.height = 'auto';
+        let height = document.getElementById('list').clientHeight;
+        document.getElementById('list').style.height = height >= 200 ? '200px' : 'auto';
+        document.getElementById('list').scrollTop  = height;
+      },10);
+
+    }
+  }
+})  
+</script>
+</body>
+</html>

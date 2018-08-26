@@ -1,0 +1,70 @@
+body{
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+.name{
+  border: 3px solid #f6f6f6;
+  padding: 10px;
+  text-align: center;
+}
+.chat{
+  width: 400px;
+  margin: 0 auto;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  padding: 10px;
+  margin-top: 50px;
+}
+.name__input{
+  text-align: center;
+  font-size: 20px;
+  border: 1px solid #f1f1f1;
+  color: #dc5f5f;
+}
+.chat__title{
+  text-align: center;
+  position: relative;
+}
+.chat__list{
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll;
+}
+.chat__delete{
+  border: 1px solid #dc5f5f;
+  padding: 1px 3px;
+  cursor: pointer;
+  font-size: 13px;
+  right: 0;
+  position: absolute;
+}
+.chat__el{
+  list-style-type: none;
+  border: 1px solid #f3f3f3;
+  padding: 5px 10px;
+  margin: 5px;
+}
+.chat__name{
+  display: inline-block;
+  border: 1px solid #f1f1f1;
+  padding: 2px 10px;
+  color: #dc5f5f;
+}
+.chat__message{
+  display: block;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+.chat__time{
+  float: right;
+  border: 1px solid #f1f1f1;
+  padding: 2px 10px;
+}
+.chat__mess{
+  width: 94%;
+  height: 30px;
+  margin-top: 20px;
+  padding: 0 10px;
+}
+.chat__button{
+  width: 100%;
+  margin-top: 5px;
+}
