@@ -19,7 +19,7 @@
           <div class="chat__message">{{item.message}}</div>
         </li>
       </ul>
-      <input type="text" class="chat__mess" placeholder="enter your message" v-model="val">
+      <input type="text" class="chat__mess" placeholder="enter your message" v-model="val"  @keyup.enter="add">
       <button class="chat__button" @click="add">send</button>
     </div>
   </div>
@@ -30,16 +30,23 @@
 <script>
 var app = new Vue({
   el: '#app',
-  data: {
-    val: '',
-    name: 'Guest',
-    chat: []
+  data() {
+    return {
+      val: '',
+      name: 'Guest',
+      chat: [],
+      info: []
+    };
   },
   created: function () {
     if(localStorage.chat){
       this.chat = JSON.parse(localStorage.chat);
     }
     this.getHeightChat();
+
+  },
+  mounted(){
+    console.log('adfsdfsdfsdf');
   },
   watch: {
     chat: function(val){
