@@ -11,7 +11,10 @@
   <div id="app">
     <div class="chat">
     <div class="name">Your name : <input type="text" class="name__input" value="{{name}}" v-model="name"></div>
-      <h3 class="chat__title">CHAT VUE <span class="chat__delete" @click="clearChat">clear</span></h3>
+      <h3 class="chat__title">CHAT VUE 
+        <span class="chat__delete" @click="clearChat">clear</span>
+        <span class="chat__get" @click="getChat">get</span>
+      </h3>
       <ul class="chat__list" id="list">
         <li class="chat__el" v-for="item in chat">
           <div class="chat__name">{{item.name}} :</div>
@@ -22,11 +25,11 @@
       <input type="text" class="chat__mess" placeholder="enter your message" v-model="val"  @keyup.enter="add">
       <button class="chat__button" @click="add">send</button>
     </div>
+
   </div>
-
   
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.16/vue.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
 var app = new Vue({
   el: '#app',
@@ -39,18 +42,22 @@ var app = new Vue({
     };
   },
   created: function () {
-    if(localStorage.chat){
-      this.chat = JSON.parse(localStorage.chat);
-    }
-    this.getHeightChat();
 
   },
   mounted(){
-    console.log('adfsdfsdfsdf');
+    axios
+      .get('api')
+      .then(response => (this.chat = response.data))
+
+    this.name = localStorage['nameChat'] || 'Guest';
+    this.getHeightChat();
   },
   watch: {
     chat: function(val){
       this.message = val;
+    },
+    name: function(val){
+      localStorage.setItem('nameChat', val);
     }
   },
   methods: {
@@ -60,27 +67,22 @@ var app = new Vue({
       }else{
         this.chat.push({name: this.name, message: this.val, time: new Date().toLocaleString().split(',').splice(1,1).join()});
         this.val = '';
-        this.addLocal();  
         this.getHeightChat();      
       }
+      axios.post('save.php', JSON.stringify(this.chat))
     },
     clearChat: function(){
       this.chat = [];
-      this.addLocal();
+      axios.post('save.php', JSON.stringify(this.chat))
       this.getHeightChat();
     },
-    addLocal: function(){
-      localStorage.setItem('chat', JSON.stringify(this.chat));
+    getChat: function(){
+      location = location.href;
     },
     getHeightChat: function(){
-
       setTimeout(function(){
-        document.getElementById('list').style.height = 'auto';
-        let height = document.getElementById('list').clientHeight;
-        document.getElementById('list').style.height = height >= 200 ? '200px' : 'auto';
-        document.getElementById('list').scrollTop  = height;
-      },10);
-
+        document.getElementById('list').scrollTop  = 99999999;
+      },50);
     }
   }
 })  

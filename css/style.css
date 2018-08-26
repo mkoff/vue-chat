@@ -25,6 +25,8 @@ body{
 }
 .chat__list{
   margin: 0;
+  height: 150px;
+  border: 1px solid #f1f1f1;
   padding: 0;
   overflow-y: scroll;
 }
@@ -34,6 +36,14 @@ body{
   cursor: pointer;
   font-size: 13px;
   right: 0;
+  position: absolute;
+}
+.chat__get{
+  border: 1px solid #dc5f5f;
+  padding: 1px 3px;
+  cursor: pointer;
+  font-size: 13px;
+  left: 0;
   position: absolute;
 }
 .chat__el{
